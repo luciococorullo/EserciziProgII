@@ -33,6 +33,7 @@ void func(char nomefile[]){
     while(!feof(fp))
     {
         fgets(buffer,40, fp);
+        
         i++;
         if(i%25==0)
         {
