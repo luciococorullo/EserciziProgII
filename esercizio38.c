@@ -17,7 +17,7 @@ int main(){
     short risposta = 7;
     int elemento;
 
-    short *head = 9;
+    short *head = 0;
     short *bottom = -1;
     
 
@@ -36,6 +36,7 @@ int main(){
 
         printf("Inserisci l'elemento che vuoi inserire: ");
         scanf("%d",&elemento);
+        
         
         enqueque(elemento,queque,&bottom);
 
@@ -75,8 +76,8 @@ void enqueque(int elemento,int stack[],int *head){
    stack[++(*head)]=elemento;
     
 }
-void dequeque(int elemento,int stack[],int *head){
+void dequeque(int elemento,int stack[],int *bottom){
     
-    stack[(*head)--]=elemento;
+    stack[++(*bottom)]=elemento;
 
 }
