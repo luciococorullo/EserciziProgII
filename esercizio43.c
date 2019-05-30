@@ -17,13 +17,13 @@ int main(){
     lista *lis;
 
     char stringa[] = "Hello World!";
-    short i = 0;
+    short i = strlen(stringa)-1;
 
     creaLista(&lis);
 
     while(stringa[i] != '\0'){
         ins(&lis,stringa[i]);
-        i++;
+        i--;
     }
 
     visitaLista(lis);
@@ -33,7 +33,7 @@ int main(){
 void visitaLista(lista lis)
 {
   if(lis == NULL){
-    printf("Lista vuota!\n");
+    printf("\nLista vuota!\n");
   }
   else{
     printf("%c\t", lis->info);
