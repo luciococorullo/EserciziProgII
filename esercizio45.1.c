@@ -1,4 +1,4 @@
-/* Realizzare in C le funzioni per la gestione, mediante menù, delle strutture dati coda mediante lista
+/* Realizzare in C le funzioni per la gestione, mediante menù, delle strutture dati lista mediante lista
 lineare dinamica e generica con [rispettivamente senza] nodo sentinella. */
 
 #include <stdio.h>
@@ -13,31 +13,30 @@ typedef struct structlista{
 }nodo;
 typedef nodo elemento;
 
-typedef struct queque
+typedef struct stacl
 {
     int cnt;
     elemento *head;
-    elemento *bottom;
-}queque;
+}stack;
 
 typedef enum{false,true} boolean;
 
-void creaCoda(queque *);
-boolean vuota(queque *);
-void enqueque(queque *,int);
-int dequeque(queque *);
+void creaStack(stack *);
+boolean vuoto(stack *);
+void push(stack *,int);
+int pop(stack *);
 
 int main(){
 
-    queque *q;
+    stack *q;
 
     int elem;
     int risposta=1;
 
-    creaCoda(&q);
+    creaStack(&q);
 
     while(risposta!=0){
-    printf("\n\nQuale operazione vuoi eseguire sulla queque?\n1.Inserire un elemento\n2.Eliminare un elemento\n0.Uscire.\n--->");
+    printf("\n\nQuale operazione vuoi eseguire sullo stack?\n1.Inserire un elemento\n2.Eliminare un elemento\n0.Uscire.\n--->");
     scanf("%d",&risposta);
     
 
@@ -48,39 +47,39 @@ int main(){
         printf("Inserisci l'elemento che vuoi inserire: ");
         scanf("%d",&elem);
         
-        enqueque(&q,elem);
+        push(&q,elem);
 
         break;
     
     case 2:
 
-        if(vuota(&q)){
-        printf("Coda vuota, impossibile rimuovere elemento.\n");
+        if(vuoto(&q)){
+        printf("stack vuoto, impossibile rimuovere elemento.\n");
         break;
         }
 
         printf("Elemento rimosso.\n");
-        dequeque(&q);
+        pop(&q);
 
         break;
     
     default:
-    break;
+    return 0;
     }
 
 }
 return 0;
 }
 
-void creaCoda(queque *q){
+void creaStack(stack *q){
 
     q -> cnt = 0;
     q -> head = NULL;
-    q -> bottom = NULL;
+
 
 }
 
-int dequeque(queque *q){
+int pop(stack *q){
     int info;
     elemento *p;
 
@@ -94,23 +93,18 @@ int dequeque(queque *q){
     return info;
 }
 
-void enqueque(queque *q,int info){
+void push(stack *q,int info){
+
     elemento *p;
 
     p = malloc(sizeof(elemento));
     p->info = info;
 
-    p->link = NULL;
+    p->link = q->head;
+    q->head = p;
 
-    if(!vuota(q)){
-        q->bottom->link = p;
-        q->bottom = p;
-    }
-    else{
-        q->head = q->bottom = p;
-    }
     q->cnt++;
 }
-boolean vuota(queque *q){
+boolean vuoto(stack *q){
     return ((boolean)(q->cnt == 0));
 }
