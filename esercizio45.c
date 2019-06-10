@@ -59,9 +59,8 @@ int main(){
         break;
         }
 
-        printf("Elemento rimosso.\n");
-        dequeque(&q);
-
+        printf("Elemento %d rimosso.\n",dequeque(&q));
+        
         break;
     
     default:
@@ -74,43 +73,47 @@ return 0;
 
 void creaCoda(queque *q){
 
-    q -> cnt = 0;
-    q -> head = NULL;
+    q -> cnt = 0;               //inizializzo a 0 il contatore del numero di elementi nella coda
+    q -> head = NULL;           //visto che la coda é vuota sia la testa che il fondo punteranno a null
     q -> bottom = NULL;
 
 }
 
 int dequeque(queque *q){
-    int info;
-    elemento *p;
 
-    info = q ->head ->info;
-    p = q -> head;
+    int info;                    //dichiaro una variabile intera che restituiro alla fine della funzione
+    elemento *p;                 //dichiaro un nuovo nodo
 
-    q->head = q->head ->link;
-    q-> cnt--;
-    free(p);
+    info = q ->head ->info;      //metto il contenuto dell'elemento in testa nella variabile info
+    p = q -> head;               //assegno al puntatore p la posizione in testa della coda
 
-    return info;
+    q->head = q->head ->link;    //riposiziono la testa della coda alla nuova posizione
+    q-> cnt--;                   //decremento il contatore del numero di elementi
+    free(p);                     //libero la memoria precedentemente allocata durante l'enqueque
+
+    return info;                 //ritorno il valore rimosso
 }
 
 void enqueque(queque *q,int info){
-    elemento *p;
 
-    p = malloc(sizeof(elemento));
-    p->info = info;
+    elemento *p;                    //dichiaro un nuovo elemento
 
-    p->link = NULL;
+    p = malloc(sizeof(elemento));   //alloco spazio per il nuovo elemento
+    p->info = info;                 //assegno al campo info del nuovo nodo il valore della varibile info che voglio inserire nella coda
 
-    if(!vuota(q)){
-        q->bottom->link = p;
-        q->bottom = p;
+    p->link = NULL;                 //assegno al puntatore del prossimo elemento il valore NULL visto che sto operando alla fine della coda
+
+    if(!vuota(q)){                  //se la coda non é vuota
+        q->bottom->link = p;        //
+        q->bottom = p;              //inserisco l'elemento in posizione bottom
     }
     else{
-        q->head = q->bottom = p;
+        q->head = q->bottom = p;    //se la coda é vuota la coda sará nella stessa posizione della testa e poi potremmo aggiungere l'elemento
     }
-    q->cnt++;
+    q->cnt++;                       //aumento il contatore del numero di elementi
 }
+
+
 boolean vuota(queque *q){
     return ((boolean)(q->cnt == 0));
 }
