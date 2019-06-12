@@ -1,5 +1,5 @@
-/*  Scrivere le function C per la visita (preorder, inorder e postorder) di un albero binario rappresentato
-mediante array.  */
+/*Scrivere function C iterativa per la costruzione di un albero binario di ricerca rappresentato mediante
+liste multiple.*/
 
 
 #include <stdio.h>
