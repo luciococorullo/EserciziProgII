@@ -1,80 +1,77 @@
 /* Scrivere function C la costruzione e la visita “per livelli” di un albero qualsiasi
 rappresentato mediante array: in input per ciascun nodo sonodati il grado ed i nodi figli  */
 
-
+#define MAXNODI 10
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
-int main(){
-
-    struct tipo{
-        char dato[10];
-        int grado;
+struct tipo{
+    char dato[10];
+    int grado;
+    int p[2];
     };
 
-    struct tipo albero[30];
+struct tipo albero[MAXNODI];
+
+int main(){
+
     
-    int corr = 0;
-    int size,i,livello;
-    int mancano = 1;
-    int da_acq = 0;
-    int ultimo = 0;
+    printf("\nInserisci il contenuto del nodo radice --> ");
+    scanf("%s",&albero[0].dato);
+    printf("Inserisci il grado della radice --> ");
+    scanf("%d",&albero[0].grado);
+    printf("Fine livello.\n");
+    crea();
 
-    //inizializzo l'albero a 0
-    for(i = 0;i<=10;i++){
-        strcpy(albero[i].dato,"0");
+    stampa();
+
+return 0;
+}
+
+void crea(){
+
+    int k,i=0,j=1;
+
+    while(i!=MAXNODI){
+        for(k=0;k<albero[i].grado;k++){
+
+        printf("\nInserisci il %d figlio del nodo %s -> ", k+1,albero[i].dato);
+        scanf("%s",albero[i+j+k].dato);
+
+        printf("Inserisci il grado del %d figlio ->",k+1);
+        scanf("%d",&albero[i+j+k].grado);
+    	
+        albero[i].p[k] = i+j+k;
+
+        }
+        j += k-1;
+        i++;
+        
+    }
+}
+void stampa(){
+
+    short i,j,livello = 0;
+    short cnt = 1;
+    for(i=0;i<MAXNODI;i++){
+        cnt = cnt + albero[i].grado;
     }
 
-    do{
-        printf("Inserisci il nodo:\nDato: ");
-        scanf("%s",albero[corr].dato);
-        printf("\nGrado del nodo: ");
-        scanf("%d",&albero[corr].grado);
-        printf("\n");
-
-        //incremento gli elementi da acquisire aggiungendo i nuovi
-        da_acq = da_acq + albero[corr].grado;
-        corr++;
-        mancano--;
-
-        if(mancano==0){
-            printf("\nFine livello\n");
-            mancano = da_acq;
-            da_acq = 0;
-        }
-
-    }while(mancano!=0);
-    size = corr;
-
-    //stampa del vettore
-    for(i=0;i<=corr-1;i++){
-        printf("%s ->%d\n",albero[i].dato,albero[i].grado);
+    printf("\n\nVisita dell'albero per livelli:\n");
+    j=0;
+    for(i=0;i<cnt;i++){
+        printf("%s -> ",albero[i].dato);
+        
+        livello = livello + albero[i].grado;
     }
+    if (i == j)
+    {
+    printf("\n");
+    j = j+livello;
+    livello = 0;
+    }
+    
 
-    printf("\n---Stampa per livelli---\n");
-
-    corr = 0; mancano = 1; da_acq = 0; livello = 1; ultimo = 0;
-    printf("Livello numero 1\n");
-
-    do{
-        printf("\nNodo: \n");
-        printf("Dato = %s \n",albero[corr].dato);
-        printf("Grado = %d\n",albero[corr].grado);
-
-        da_acq = da_acq+albero[corr].grado;
-        corr++;
-        mancano--;
-
-        if(mancano==0){
-            livello++;
-            printf("\n----Livello numero %d\n",livello);
-            mancano = da_acq;
-            da_acq = 0;
-        }
-    }while(mancano!=0);
-
-    printf("Addio puttane!!!!!!");
-    return 0;
 }
