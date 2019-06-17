@@ -4,86 +4,98 @@ mediante array.  */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-typedef struct nodo{
-    int data;
-    struct nodo *sinista;
-    struct nodo *destra;
-}nodo;
-
-typedef nodo *albero;
-
-albero init(int,albero,albero);
-albero crea(int [],int ,int );
-void inorder(albero);
-void preorder(albero);
-void postorder(albero);
-
-
-int main(){
-
-    albero tree;
-    int a[] = {1,2,3,4,5,6};
-
-    tree = crea(a,0,6);
-
-    printf("\n---Visita inorder---\n");
-    inorder(tree);
-
-    printf("\n---Visita preorder---\n");
-    preorder(tree);
-
-    printf("\n---Visita postorder---\n");
-    postorder(tree);
-
-
+#define MAX 10
+ 
+int leaf(int[],int);
+void visitaPreOrderRic(int[],int);
+void visitaInOrderRic(int[],int);
+void visitaPostOrderRic(int[],int);
+ 
+int main()
+{
+    int tree[MAX] = {-1,0,2,3,4,5,6,-1,-1,9};
+ 
+    
+    printf("\nPREORDER\n");
+    visitaPreOrderRic(tree,1);
+    
+ 
+    
+    printf("\nINORDER\n");
+    visitaInOrderRic(tree,1);
+    
+ 
+    
+    printf("\nPOSTORDER\n");
+    visitaPostOrderRic(tree,1);
+    
+ 
     return 0;
 }
-
-albero init(int d1,albero p1,albero p2){
-
-    albero t;
-    t = malloc(sizeof(nodo));
-
-    t->data = d1;
-    t->sinista = p1;
-    t->destra = p2;
-
-    return t;
+ 
+ 
+void visitaPreOrderRic(int tree[], int i)
+{
+    if(tree[i] != -1)
+    printf("\n*   NODO->%d  *\n",tree[i]); 
+ 
+ 
+    if(leaf(tree, i))
+        {
+        return;
+        }
+        else{
+            visitaPreOrderRic(tree,i*2);   //sinistra
+            visitaPreOrderRic(tree,i*2+1); //destra
+        }
 }
+ 
+void visitaInOrderRic(int tree[], int i)
+{
+    if(leaf(tree, i))
+        {
+ 
+        if(tree[i] != -1)
+        printf("\n*   NODO->%d  *\n",tree[i]); 
 
-albero crea(int a[],int i,int size){
-    if(i>=size)
-    return NULL;
+ 
+        return;
+        }
+        else{
+            visitaInOrderRic(tree,i*2);
+ 
+            if(tree[i] != -1)
+            printf("\n*   NODO->%d  *\n",tree[i]); 
 
+ 
+            visitaInOrderRic(tree,i*2+1);
+            }
+}
+ 
+void visitaPostOrderRic(int tree[], int i)
+{
+    if(leaf(tree, i))
+        {
+ 
+        if(tree[i] != -1)
+        printf("\n*   NODO->%d  *\n",tree[i]); 
+
+ 
+        return;
+        }
+        else{
+            visitaPostOrderRic(tree,i*2);
+            visitaPostOrderRic(tree,i*2+1);
+ 
+            if(tree[i] != -1)
+            printf("\n*   NODO->%d  *\n",tree[i]); 
+            }
+}
+ 
+int leaf(int tree[], int i)
+{
+    if(2*i < MAX || 2*i+1 < MAX)
+        return 0;
     else
-    return init(a[i],crea(a,2*i+1,size),crea(a,2*i+2,size));
-}
-
-void inorder(albero tree){
-
-    if(tree != NULL){
-        inorder(tree->sinista);
-        printf("%d ",tree->data);
-        inorder(tree->destra);
-    }
-}
-
-void preorder(albero tree){
-
-    if(tree != NULL){
-        printf("%d ",tree->data);
-        inorder(tree->sinista);
-        inorder(tree->destra);
-    }
-}
-
-void postorder(albero tree){
-
-    if(tree != NULL){
-        inorder(tree->sinista);
-        inorder(tree->destra);
-        printf("%d ",tree->data);
-    }
+        return 1;
 }
