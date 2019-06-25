@@ -15,7 +15,7 @@ immesso per la variabile intera X dichiarata una volta signed ed un’altra unsi
 void calcBin(int [], int);
 int summ(int []);
 int main(){
-    int n = 5;
+    int n;
     int array[8];
 
     printf("Insert the decimal number: ");
@@ -30,34 +30,34 @@ int main(){
     printf("%d", array[i]);
     }
     
-    printf("\nThe decimal number is: %d\n", summ(array));
+    printf("\nThe decimal number is: %d\n", calcDec(array));
     return 0;
 }
 
 void calcBin(int array[], int n){
     int i,k;
 
-    for ( i = 7; i >= 0; i--){
-        k = n >> i;
+    for ( i = 7; i >= 0; i--){      
+        k = n >> i;         //shifto di i bit i bit di n nella variabile k
 
         if (k & 1)
-        array[i] = 1;
+        array[i] = 1;       //se il bit é a 1 devo inserirlo nell'array
         else
-        array[i] = 0;
+        array[i] = 0;       
     }
 
 }
 
-int summ(int array[]){
-    int i, sum = 0;
+int calcDec(int array[]){
+    int sum = 0;       
     
-    for ( i = 0; i <=7; i++){
+    for (short i = 0; i <=7; i++){
 
-        if(array[i] == 1){
-           array[i] = pow(2,i);
+        if(array[i] == 1){    //se il bit é 1 devo contarlo
+           array[i] = pow(2,i); //quindi calcolo il suo valore in base alla posizione 
         }
-        sum = sum + array[i];
+        sum = sum + array[i];   //e lo aggiungo alla somma
     
     }
-    return sum;
+    return sum;         //in fine ritorno la somma dei valori dei singoli bit, cioé il valore decimale del numero 
 }

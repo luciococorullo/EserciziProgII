@@ -16,12 +16,12 @@ int main(){
     return 0;
 }
 int comp2(int num){
-    num = ~num;
-    num = num + 1;
+    num = ~num;             //nega num, ovvero inverto tutti i bit della variabile
+    num = num + 1;          //sommo uno per effettuare il complemento a due
     return num;
 }
 int biased(int num){
     int b;
-    b = pow(2,N-1)-1;
-    return num+b;
+    b = pow(2,N-1)-1;       //calcolo il valore del biased
+    return num+b;           //lo sommo alla variabile in ingresso e la restituisco
 }

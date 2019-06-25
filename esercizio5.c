@@ -13,7 +13,7 @@ int main(){
     int num;
     int base;
 
-    int result[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    int result[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //inizializzo i due array che conterranno i risultati delle function
     int result1[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 
@@ -40,21 +40,21 @@ int main(){
 void conversion(int num,int base,int result[]){
     int i = 15;
     while(num>0){
-        result[i]=num%base;
-        num = num / base;
-        i--;
+        result[i]=num%base;     //nell'array in posizione i metto il resto della divisione tra il numero e la base
+        num = num / base;       //il numero nel ciclo successivo sará uguale al numero diviso la base
+        i--;                    //diminuisco la variabile che scorre sull'array
     }
 }
 void convBit(int array[], int n){
     int i,j;
 
     for ( i = 15; i >= 0; i--){
-        j = n >> i;
+        j = n >> i;                 //metto in j i bit di n shiftati a destra di i bit
 
-        if (j & 1)
+        if (j & 1)                  //se j sará uguale a uno lo metto nell'array del risultato
         array[i] = 1;
         else
-        array[i] = 0;
+        array[i] = 0;               //se j sará uguale a 0 lo metto ugualmente nell'array del risultato
     }
 }
 
